@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aksha Ladies Salon &mdash; Special Service for Special People</title>
+<style>
+  :root{
+    --ivory:#fbf7f2;
+    --blush:#f6e9e2;
+    --rose:#e7c9bb;
+    --terracotta:#c98a72;
+    --gold:#c9a15a;
+    --ink:#2b2422;
+    --muted:#8a7c74;
+    --white:#ffffff;
+    --line:#eee1d6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    background:var(--ivory);
+    color:var(--ink);
+    line-height:1.65;
+    font-size:15px;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:400;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  ul{list-style:none;}
+  button{font-family:inherit;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px;}
+  .eyebrow{display:block;text-transform:uppercase;letter-spacing:3px;font-size:11px;color:var(--terracotta);margin-bottom:14px;font-weight:600;}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- Image placeholder ---------- */
+  .ph{position:relative;width:100%;height:100%;min-height:100%;
+      background:linear-gradient(135deg,#f6e9e2 0%,#eed6c8 60%,#e7c9bb 100%);
+      display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .ph::before{content:"";position:absolute;inset:0;opacity:.5;
+      background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.5) 0 2px, transparent 2px 16px);}
+  .ph span{position:relative;z-index:2;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;
+      color:#8a5f47;background:rgba(255,255,255,.82);padding:7px 16px;border-radius:20px;text-align:center;max-width:80%;}
+
+  /* ---------- Ambient video ---------- */
+  .amb{position:relative;overflow:hidden;background:#111;}
+  .amb .frame{position:absolute;top:50%;left:50%;width:100%;height:100%;transform:translate(-50%,-50%) scale(1.6);pointer-events:none;}
+  .amb iframe{width:100%;height:100%;border:0;display:block;}
+
+  /* ---------- Interactive buttons ---------- */
+  .btn{position:relative;display:inline-flex;align-items:center;gap:8px;padding:15px 32px;border-radius:40px;
+       font-size:12.5px;text-transform:uppercase;letter-spacing:1.6px;cursor:pointer;border:none;overflow:hidden;
+       transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;isolation:isolate;}
+  .btn span{position:relative;z-index:2;}
+  .btn::before{content:"";position:absolute;inset:0;z-index:1;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.3,.8,.2,1);}
+  .btn:hover::before{transform:scaleX(1);}
+  .btn:active{transform:scale(.96) !important;}
+  .btn-dark{background:var(--ink);color:#fff;}
+  .btn-dark::before{background:var(--terracotta);}
+  .btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--ink);}
+  .btn-outline::before{background:var(--ink);}
+  .btn-outline:hover{color:#fff;}
+  .btn-outline-light{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.85);}
+  .btn-outline-light::before{background:#fff;}
+  .btn-outline-light:hover{color:var(--ink);}
+  .btn.magnetic{will-change:transform;}
+  .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none;z-index:3;}
+  @keyframes rip{to{transform:scale(2.6);opacity:0;}}
+
+  /* ---------- Progress bar ---------- */
+  #progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--terracotta),var(--gold));width:0%;z-index:999;transition:width .1s linear;}
+
+  /* ---------- Announcement bar ---------- */
+  .announce{background:var(--ink);color:var(--blush);text-align:center;font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;padding:9px 12px;}
+
+  /* ---------- Header ---------- */
+  header{position:sticky;top:0;z-index:100;background:rgba(251,247,242,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .navwrap{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1240px;margin:0 auto;}
+  .logo{font-size:21px;letter-spacing:1.5px;text-transform:uppercase;}
+  .logo b{color:var(--terracotta);font-style:italic;}
+  nav ul{display:flex;gap:28px;}
+  nav a{font-size:12.5px;text-transform:uppercase;letter-spacing:1.3px;position:relative;padding:4px 0;}
+  nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1.5px;background:var(--terracotta);transition:width .3s ease;}
+  nav a:hover::after{width:100%;}
+  .navicons{display:flex;align-items:center;gap:14px;}
+  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+      font-size:15px;transition:.3s;}
+  .icon-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink);transform:translateY(-2px);}
+  .menu-toggle{display:none;font-size:24px;background:none;border:none;cursor:pointer;}
+  @media (max-width:940px){
+    nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--ivory);border-bottom:1px solid var(--line);}
+    nav.open{display:block;}
+    nav ul{flex-direction:column;padding:22px 32px;gap:16px;}
+    .menu-toggle{display:block;order:2;}
+    .logo{font-size:16px;order:1;}
+    .navwrap{flex-wrap:nowrap;gap:10px;padding:14px 18px;}
+    .navicons{order:3;gap:6px;}
+    .navicons .icon-btn:nth-child(2){display:none;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;height:94vh;min-height:600px;}
+  .hero .ph{position:absolute;inset:0;align-items:flex-start;justify-content:flex-start;}
+  .hero .ph span{margin:26px 0 0 26px;}
+  .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg, rgba(43,36,34,.18) 0%, rgba(43,36,34,.12) 40%, rgba(43,36,34,.55) 100%);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:24px;}
+  .hero-overlay .eyebrow{color:#f0dcc3;}
+  .hero-overlay h1{font-size:clamp(38px,6.4vw,74px);letter-spacing:1px;margin-bottom:14px;}
+  .hero-overlay .tagline{font-family:Georgia,serif;font-style:italic;font-size:clamp(16px,2vw,20px);color:#f6ece2;margin-bottom:22px;}
+  .hero-overlay p{max-width:520px;font-size:15.5px;color:#f1ece4;margin-bottom:34px;}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;color:#fff;font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.85;}
+  .scroll-cue::after{content:"";display:block;width:1px;height:34px;background:#fff;margin:8px auto 0;opacity:.6;animation:bob 2s infinite ease-in-out;}
+  @keyframes bob{0%,100%{transform:scaleY(1);}50%{transform:scaleY(.5);}}
+
+  /* ---------- USP strip ---------- */
+  .usp{padding:60px 0;border-bottom:1px solid var(--line);}
+  .usp .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;}
+  .usp-item{text-align:center;}
+  .usp-item .ic{width:52px;height:52px;border-radius:50%;background:var(--blush);display:flex;align-items:center;justify-content:center;
+      font-size:20px;margin:0 auto 14px;transition:transform .35s;}
+  .usp-item:hover .ic{transform:scale(1.12) rotate(-6deg);background:var(--rose);}
+  .usp-item h4{font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+  .usp-item p{font-size:13px;color:var(--muted);}
+  @media (max-width:900px){ .usp .wrap{grid-template-columns:1fr 1fr;} }
+
+  /* ---------- Story ---------- */
+  .story{padding:130px 0;}
+  .story .wrap{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+  .story-img{aspect-ratio:4/5;border-radius:4px;overflow:hidden;}
+  .story-text h2{font-size:clamp(28px,4vw,42px);margin-bottom:22px;line-height:1.25;}
+  .story-text p{color:var(--muted);margin-bottom:16px;max-width:480px;}
+  .story-list{margin-top:22px;display:flex;flex-direction:column;gap:12px;}
+  .story-list div{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink);}
+  .story-list div::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--terracotta);flex-shrink:0;}
+  @media (max-width:900px){ .story .wrap{grid-template-columns:1fr;} }
+
+  /* ---------- Treatments (video) ---------- */
+  .treatments{padding:110px 0 130px;background:var(--blush);}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 60px;}
+  .section-head h2{font-size:clamp(30px,4vw,42px);}
+  .section-head p{color:var(--muted);margin-top:16px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:6px;}
+  .tcard{position:relative;aspect-ratio:3/4;overflow:hidden;cursor:pointer;transition:transform .5s cubic-bezier(.2,.8,.2,1);}
+  .tcard:hover{transform:scale(1.015);}
+  .tcard .amb{position:absolute;inset:0;}
+  .tcard .shade{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.78) 100%);}
+  .tcard .tbody{position:absolute;left:0;right:0;bottom:0;z-index:3;color:#fff;padding:26px 24px;}
+  .tcard h3{font-size:21px;margin-bottom:6px;letter-spacing:.4px;}
+  .tcard .price{font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:#ecdcbf;opacity:0;max-height:0;overflow:hidden;transition:.35s;}
+  .tcard:hover .price{opacity:1;max-height:40px;margin-top:8px;}
+  .tcard .desc{font-size:13px;color:#e7e2da;opacity:0;max-height:0;overflow:hidden;transition:.35s;}
+  .tcard:hover .desc{opacity:1;max-height:60px;margin-top:6px;}
+
+  /* ---------- Full menu accordion ---------- */
+  .menu-section{padding:110px 0;}
+  .accordion{max-width:840px;margin:0 auto;}
+  .acc-item{border-bottom:1px solid var(--line);}
+  .acc-head{display:flex;align-items:center;justify-content:space-between;padding:26px 4px;cursor:pointer;user-select:none;}
+  .acc-head h3{font-size:19px;display:flex;align-items:center;gap:14px;}
+  .acc-head .num{font-size:12px;color:var(--terracotta);font-family:Georgia,serif;}
+  .acc-head .plus{width:26px;height:26px;position:relative;flex-shrink:0;}
+  .acc-head .plus::before,.acc-head .plus::after{content:"";position:absolute;background:var(--ink);top:50%;left:50%;transform:translate(-50%,-50%);}
+  .acc-head .plus::before{width:16px;height:1.6px;}
+  .acc-head .plus::after{width:1.6px;height:16px;transition:transform .35s;}
+  .acc-item.open .plus::after{transform:translate(-50%,-50%) rotate(90deg) scaleY(0);}
+  .acc-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.2,.8,.2,1);}
+  .acc-item.open .acc-body{max-height:900px;}
+  .acc-body-inner{padding:0 4px 28px;display:grid;gap:16px;}
+  .svc-row{display:flex;justify-content:space-between;gap:20px;padding-bottom:14px;border-bottom:1px dashed var(--line);}
+  .svc-row:last-child{border-bottom:none;padding-bottom:0;}
+  .svc-row h4{font-size:14.5px;margin-bottom:4px;}
+  .svc-row p{font-size:13px;color:var(--muted);max-width:480px;}
+
+  /* ---------- Gallery ---------- */
+  .gallery{padding:110px 0;background:var(--blush);}
+  .gal-grid{columns:4 220px;column-gap:6px;}
+  .gal-grid .ph{margin-bottom:6px;break-inside:avoid;border-radius:2px;overflow:hidden;}
+  .gal-grid .ph:nth-child(3n+1){aspect-ratio:3/4;}
+  .gal-grid .ph:nth-child(3n+2){aspect-ratio:1/1;}
+  .gal-grid .ph:nth-child(3n){aspect-ratio:4/5;}
+  @media (max-width:700px){ .gal-grid{columns:2 160px;} }
+
+  /* ---------- Reviews ---------- */
+  .reviews{padding:110px 0;}
+  .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:36px;}
+  .testi-card{text-align:center;padding:30px 22px;border:1px solid var(--line);border-radius:6px;transition:.35s;}
+  .testi-card:hover{box-shadow:0 20px 40px rgba(43,36,34,.08);transform:translateY(-4px);}
+  .stars{color:var(--gold);font-size:14px;margin-bottom:16px;letter-spacing:3px;}
+  .testi-card p{font-family:Georgia,serif;font-style:italic;font-size:15.5px;color:var(--ink);margin-bottom:16px;}
+  .testi-card .who{font-size:11.5px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);}
+  .review-note{text-align:center;font-size:12.5px;color:var(--muted);margin-top:30px;}
+  .review-note a{color:var(--terracotta);text-decoration:underline;}
+
+  /* ---------- Newsletter ---------- */
+  .newsletter{background:var(--ink);color:#fff;padding:80px 0;text-align:center;}
+  .newsletter h2{font-size:clamp(26px,4vw,34px);margin-bottom:14px;}
+  .newsletter p{color:#cbbdb3;margin-bottom:30px;}
+  .newsletter form{display:flex;justify-content:center;gap:10px;max-width:440px;margin:0 auto;flex-wrap:wrap;}
+  .newsletter input{flex:1;min-width:200px;padding:14px 18px;border:1px solid #4a4340;background:transparent;color:#fff;border-radius:30px;}
+  .newsletter input::placeholder{color:#a49c93;}
+  .newsletter button{padding:14px 28px;background:var(--gold);color:#fff;border:none;border-radius:30px;text-transform:uppercase;letter-spacing:1.4px;font-size:12px;cursor:pointer;position:relative;overflow:hidden;}
+
+  /* ---------- Contact ---------- */
+  .contact{padding:110px 0;}
+  .contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+  .contact-info h2{font-size:clamp(28px,4vw,36px);margin-bottom:26px;}
+  .info-row{display:flex;gap:16px;margin-bottom:22px;}
+  .info-row .ic{width:38px;height:38px;border-radius:50%;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .info-row h4{font-size:13.5px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+  .info-row p{color:var(--muted);font-size:14px;}
+  .whatsapp-cta{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:14px 28px;border-radius:30px;font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-top:10px;transition:transform .3s;}
+  .whatsapp-cta:hover{transform:translateY(-3px);box-shadow:0 12px 22px rgba(37,211,102,.32);}
+  .map-frame{border-radius:4px;overflow:hidden;height:100%;min-height:340px;}
+  .map-frame iframe{width:100%;height:100%;border:0;}
+  @media (max-width:900px){ .contact .wrap{grid-template-columns:1fr;} }
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--blush);padding:70px 0 30px;}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px;}
+  .foot-grid h5{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px;color:var(--muted);}
+  .foot-grid li{margin-bottom:10px;font-size:14px;}
+  .foot-grid li a:hover{color:var(--terracotta);}
+  .foot-logo{font-size:19px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;}
+  .foot-brand p{color:var(--muted);font-size:13px;max-width:280px;margin-bottom:20px;}
+  .foot-social{display:flex;gap:12px;}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);}
+  @media (max-width:820px){ .foot-grid{grid-template-columns:1fr 1fr;} }
+
+  /* ---------- Floating helpers ---------- */
+  .float-wa{position:fixed;bottom:26px;right:26px;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;
+      display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 10px 26px rgba(37,211,102,.4);z-index:90;transition:transform .3s;}
+  .float-wa:hover{transform:scale(1.08);}
+  .to-top{position:fixed;bottom:26px;right:96px;width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;
+      display:flex;align-items:center;justify-content:center;font-size:16px;z-index:90;opacity:0;pointer-events:none;transition:.3s;}
+  .to-top.show{opacity:1;pointer-events:auto;}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div class="announce">Special Service for Special People &nbsp;&middot;&nbsp; Aksha Ladies Salon, Jaddaf, Dubai</div>
+
+<header>
+  <div class="navwrap">
+    <a class="logo" href="#top">Aksha <b>Salon</b></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">&#9776;</button>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="#story">About</a></li>
+        <li><a href="#treatments">Hair</a></li>
+        <li><a href="#treatments">Skin &amp; Facials</a></li>
+        <li><a href="#treatments">Nails</a></li>
+        <li><a href="#menu">Bridal</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="navicons">
+      <a class="icon-btn" href="https://wa.me/971509956008" title="WhatsApp" aria-label="WhatsApp">&#9743;</a>
+      <a class="icon-btn" href="https://instagram.com/akshasalon" title="Instagram" aria-label="Instagram">&#9737;</a>
+      <a class="btn btn-dark magnetic" href="#contact"><span>Book Now</span></a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="ph"><span>Upload: hero photo &mdash; salon interior or team shot (wide, 1920&times;1080+)</span></div>
+  <div class="hero-overlay">
+    <span class="eyebrow reveal">Ladies Salon &middot; Jaddaf, Dubai</span>
+    <h1 class="reveal">Aksha Ladies Salon</h1>
+    <p class="tagline reveal">&ldquo;Special Service for Special People&rdquo;</p>
+    <p class="reveal">World-class hair, skin, nail and bridal treatments from certified experts &mdash; we don't stop until you're happy with the result.</p>
+    <div class="hero-cta reveal">
+      <a class="btn btn-outline-light magnetic" href="#contact"><span>Book an Appointment</span></a>
+      <a class="btn btn-outline-light magnetic" href="#treatments"><span>Explore Treatments</span></a>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</section>
+
+<section class="usp">
+  <div class="wrap">
+    <div class="usp-item reveal">
+      <div class="ic">&#9733;</div>
+      <h4>World-Class Standards</h4>
+      <p>Premium products &amp; techniques in every treatment</p>
+    </div>
+    <div class="usp-item reveal">
+      <div class="ic">&#127891;</div>
+      <h4>Certified Experts</h4>
+      <p>Skilled, experienced &amp; proven stylists and therapists</p>
+    </div>
+    <div class="usp-item reveal">
+      <div class="ic">&#9200;</div>
+      <h4>Flexible Timing</h4>
+      <p>Appointments that fit around your schedule</p>
+    </div>
+    <div class="usp-item reveal">
+      <div class="ic">&#10084;</div>
+      <h4>Value Your Money</h4>
+      <p>We work until you are fully satisfied</p>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="story-img ph reveal"><span>Upload: therapist at work / salon detail shot (portrait, 4:5)</span></div>
+    <div class="story-text reveal">
+      <span class="eyebrow">Our Philosophy</span>
+      <h2>Beauty, treated with real care &mdash; not a conveyor belt.</h2>
+      <p>At Aksha Ladies Salon we believe every client deserves undivided attention. Our certified team blends modern skin technology with tried-and-tested technique, from Goldwell Kerasilk keratin smoothing to HydraFacial-style skin renewal.</p>
+      <p>We keep our standards high and our pace unhurried &mdash; because special service is the whole point.</p>
+      <div class="story-list">
+        <div>Certified, experienced &amp; competitive staff</div>
+        <div>Premium, high-standard products only</div>
+        <div>Private, comfortable treatment rooms</div>
+        <div>We work until you're satisfied &mdash; every time</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="treatments" id="treatments">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Signature Treatments</span>
+      <h2>Watch Before You Book</h2>
+      <p>A short preview of a few of our most-loved treatments.</p>
+    </div>
+    <div class="grid">
+
+      <div class="tcard reveal">
+        <div class="amb"><div class="frame">
+          <iframe src="https://www.youtube.com/embed/glZvz8DJ_ok?autoplay=1&mute=1&loop=1&playlist=glZvz8DJ_ok&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1" allow="autoplay; encrypted-media" title="Hydra Facial"></iframe>
+        </div></div>
+        <div class="shade"></div>
+        <div class="tbody">
+          <h3>Hydra Facial</h3>
+          <div class="desc">3-step cleansing, exfoliation &amp; intense hydration for an instant glow.</div>
+          <div class="price">Glowbar &middot; 45&ndash;60 min</div>
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="amb"><div class="frame">
+          <iframe src="https://www.youtube.com/embed/zePLVf65aD4?autoplay=1&mute=1&loop=1&playlist=zePLVf65aD4&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1" allow="autoplay; encrypted-media" title="Hair Keratin"></iframe>
+        </div></div>
+        <div class="shade"></div>
+        <div class="tbody">
+          <h3>Hair Keratin</h3>
+          <div class="desc">Goldwell Kerasilk smoothing treatment for frizz-free, glossy hair.</div>
+          <div class="price">Hair &middot; 120&ndash;150 min</div>
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="amb"><div class="frame">
+          <iframe src="https://www.youtube.com/embed/KHC5BMyb9mQ?autoplay=1&mute=1&loop=1&playlist=KHC5BMyb9mQ&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1" allow="autoplay; encrypted-media" title="Nail Art"></iframe>
+        </div></div>
+        <div class="shade"></div>
+        <div class="tbody">
+          <h3>Nail Art &amp; Gel Polish</h3>
+          <div class="desc">Long-lasting gel colour and creative nail art, from classic to bold.</div>
+          <div class="price">Nails &middot; 45&ndash;90 min</div>
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="amb"><div class="frame">
+          <iframe src="https://www.youtube.com/embed/QswuzYs69vU?autoplay=1&mute=1&loop=1&playlist=QswuzYs69vU&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1" allow="autoplay; encrypted-media" title="Anti-Ageing Facial"></iframe>
+        </div></div>
+        <div class="shade"></div>
+        <div class="tbody">
+          <h3>Face Lifting &amp; Anti-Ageing</h3>
+          <div class="desc">ProGEN-technology facial to visibly reduce fine lines and wrinkles.</div>
+          <div class="price">Skin &amp; Body &middot; 60 min</div>
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="amb"><div class="frame">
+          <iframe src="https://www.youtube.com/embed/omXddDzUnoY?autoplay=1&mute=1&loop=1&playlist=omXddDzUnoY&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1" allow="autoplay; encrypted-media" title="Manicure & Pedicure"></iframe>
+        </div></div>
+        <div class="shade"></div>
+        <div class="tbody">
+          <h3>Manicure &amp; Pedicure</h3>
+          <div class="desc">Organic treatments that rejuvenate and soften hands and feet.</div>
+          <div class="price">Nails &middot; 60&ndash;90 min</div>
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="amb"><div class="frame">
+          <iframe src="https://www.youtube.com/embed/TgYIZYVukjk?autoplay=1&mute=1&loop=1&playlist=TgYIZYVukjk&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1" allow="autoplay; encrypted-media" title="Bridal Makeup"></iframe>
+        </div></div>
+        <div class="shade"></div>
+        <div class="tbody">
+          <h3>Bridal Makeup</h3>
+          <div class="desc">Expert makeup &amp; hairstyling with tailored pre-bridal packages.</div>
+          <div class="price">Bridal &middot; trial available</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Full Treatment Menu</span>
+      <h2>Every Service, By Category</h2>
+      <p>Tap a category to see the complete list of treatments we offer.</p>
+    </div>
+    <div class="accordion">
+
+      <div class="acc-item open reveal">
+        <div class="acc-head"><h3><span class="num">01</span> Hair</h3><div class="plus"></div></div>
+        <div class="acc-body"><div class="acc-body-inner">
+          <div class="svc-row"><div><h4>Hair Cutting &amp; Styling</h4><p>Expert cutting using the latest techniques for a personalised look.</p></div></div>
+          <div class="svc-row"><div><h4>Hair Colouring</h4><p>Bespoke colour services with expert application.</p></div></div>
+          <div class="svc-row"><div><h4>Hair Keratin</h4><p>Goldwell Kerasilk treatment with smoothing glyoxylic acid.</p></div></div>
+          <div class="svc-row"><div><h4>Anti Dandruff Treatment</h4><p>A powerful treatment to say goodbye to dandruff for good.</p></div></div>
+          <div class="svc-row"><div><h4>Hair Damage Control</h4><p>A nourishing formula that repairs and protects damaged hair.</p></div></div>
+          <div class="svc-row"><div><h4>Hair Loss Reduction</h4><p>Capixyl-based treatment to reactivate roots and nourish hair.</p></div></div>
+          <div class="svc-row"><div><h4>Filler Therapy</h4><p>Premium products for volume, thickness and dimension.</p></div></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item reveal">
+        <div class="acc-head"><h3><span class="num">02</span> Glowbar Facials</h3><div class="plus"></div></div>
+        <div class="acc-body"><div class="acc-body-inner">
+          <div class="svc-row"><div><h4>Aqua Derm Facial</h4><p>3-step process of cleansing, exfoliation and hydration.</p></div></div>
+          <div class="svc-row"><div><h4>Hydra Facial</h4><p>Multi-step revolutionary treatment with intense hydration.</p></div></div>
+          <div class="svc-row"><div><h4>Lip Lightening</h4><p>Treatment for dark and uneven lip tones.</p></div></div>
+          <div class="svc-row"><div><h4>Skin Smart Diagnosis</h4><p>A personalised skin assessment and treatment plan.</p></div></div>
+          <div class="svc-row"><div><h4>Under Eye Treatment</h4><p>Refreshing, rejuvenating care for the eye area.</p></div></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item reveal">
+        <div class="acc-head"><h3><span class="num">03</span> Skin &amp; Body</h3><div class="plus"></div></div>
+        <div class="acc-body"><div class="acc-body-inner">
+          <div class="svc-row"><div><h4>Aquatherm</h4><p>Ultimate hydration therapy for dry skin.</p></div></div>
+          <div class="svc-row"><div><h4>Depigmenting Treatment</h4><p>A biological treatment for sun spots and age-related discolouration.</p></div></div>
+          <div class="svc-row"><div><h4>Hydra Dynamic Anti-Ageing</h4><p>Hyaluronic acid treatment that plumps fine lines.</p></div></div>
+          <div class="svc-row"><div><h4>Advanced Skin Whitening</h4><p>High-concentration brightening treatment for all skin types.</p></div></div>
+          <div class="svc-row"><div><h4>Face Lifting Treatment</h4><p>ProGEN anti-ageing technology for wrinkles and fine lines.</p></div></div>
+          <div class="svc-row"><div><h4>Purity &amp; Detoxifying Ritual</h4><p>A cleansing, rejuvenating full treatment.</p></div></div>
+          <div class="svc-row"><div><h4>Nourishing &amp; De-tan Ritual</h4><p>Science and nature combined for a glowing complexion.</p></div></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item reveal">
+        <div class="acc-head"><h3><span class="num">04</span> Nails</h3><div class="plus"></div></div>
+        <div class="acc-body"><div class="acc-body-inner">
+          <div class="svc-row"><div><h4>Nail Gel Polish</h4><p>A long-lasting, glossy finish applied with precision.</p></div></div>
+          <div class="svc-row"><div><h4>Nail Art</h4><p>Innovative designs, from trending styles to sculptural detail.</p></div></div>
+          <div class="svc-row"><div><h4>Manicures &amp; Pedicures</h4><p>Organic treatments that rejuvenate hands and feet.</p></div></div>
+        </div></div>
+      </div>
+
+      <div class="acc-item reveal">
+        <div class="acc-head"><h3><span class="num">05</span> Bridal</h3><div class="plus"></div></div>
+        <div class="acc-body"><div class="acc-body-inner">
+          <div class="svc-row"><div><h4>Bridal Makeup</h4><p>Expert makeup and hairstyling for your wedding day.</p></div></div>
+          <div class="svc-row"><div><h4>Pre-Bridal Packages</h4><p>Tailored rituals and treatments in the run-up to your big day.</p></div></div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Gallery</span>
+      <h2>Inside Aksha Salon</h2>
+      <p>Send over your favourite salon &amp; result photos and we'll drop them straight into this grid.</p>
+    </div>
+    <div class="gal-grid">
+      <div class="ph reveal"><span>Upload: interior 1</span></div>
+      <div class="ph reveal"><span>Upload: treatment in progress</span></div>
+      <div class="ph reveal"><span>Upload: styled hair result</span></div>
+      <div class="ph reveal"><span>Upload: nail art close-up</span></div>
+      <div class="ph reveal"><span>Upload: bridal look</span></div>
+      <div class="ph reveal"><span>Upload: interior 2</span></div>
+      <div class="ph reveal"><span>Upload: facial / skincare</span></div>
+      <div class="ph reveal"><span>Upload: reception / waiting area</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Reviews</span>
+      <h2>What Our Clients Say</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>&ldquo;Sample review &mdash; replace with a real quote from your Google or Facebook reviews.&rdquo;</p>
+        <div class="who">Client Name</div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>&ldquo;Sample review &mdash; replace with a real quote from your Google or Facebook reviews.&rdquo;</p>
+        <div class="who">Client Name</div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>&ldquo;Sample review &mdash; replace with a real quote from your Google or Facebook reviews.&rdquo;</p>
+        <div class="who">Client Name</div>
+      </div>
+    </div>
+    <p class="review-note">These are placeholders. Send me your real Google/Facebook reviews (or a link to your profile) and I'll swap them in.</p>
+  </div>
+</section>
+
+<section class="newsletter">
+  <div class="wrap">
+    <h2>Get 10% Off Your First Visit</h2>
+    <p>Join our list for treatment tips, seasonal offers and new service launches.</p>
+    <form onsubmit="event.preventDefault(); alert('Thank you! Your 10% welcome code is on its way to your inbox.');">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit" class="magnetic"><span>Subscribe</span></button>
+    </form>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-info">
+      <span class="eyebrow">Visit Us</span>
+      <h2>Book Your Appointment</h2>
+
+      <div class="info-row">
+        <div class="ic">&#128205;</div>
+        <div><h4>Location</h4><p>Azurite Tower, Jaddaf &mdash; next to Dubai Police Club, Ibn Al Zahrawi St (behind Latifa Hospital), Dubai, UAE</p></div>
+      </div>
+      <div class="info-row">
+        <div class="ic">&#128222;</div>
+        <div><h4>Phone</h4><p>+971 50 658 4579 &middot; +971 4 576 4595</p></div>
+      </div>
+      <div class="info-row">
+        <div class="ic">&#9993;</div>
+        <div><h4>Email</h4><p>mail@akshasalon.com</p></div>
+      </div>
+      <div class="info-row">
+        <div class="ic">&#128337;</div>
+        <div><h4>Hours</h4><p>Flexible timing &mdash; contact us to book a slot that suits you</p></div>
+      </div>
+
+      <a class="whatsapp-cta" href="https://wa.me/971509956008">&#9743; Chat on WhatsApp</a>
+    </div>
+    <div class="map-frame">
+      <iframe src="https://www.google.com/maps?q=Azurite%20Tower%20Al%20Jaddaf%20Dubai&output=embed" loading="lazy" title="Location map"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="foot-logo">Aksha Salon</div>
+        <p>Special Service for Special People &mdash; a ladies salon in Jaddaf, Dubai offering hair, skin, nail and bridal treatments from certified experts.</p>
+        <div class="foot-social">
+          <a class="icon-btn" href="https://facebook.com/akshasalonduabi2022">f</a>
+          <a class="icon-btn" href="https://instagram.com/akshasalon">&#9737;</a>
+        </div>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#treatments">Hair</a></li>
+          <li><a href="#treatments">Glowbar Facials</a></li>
+          <li><a href="#treatments">Nails</a></li>
+          <li><a href="#menu">Skin &amp; Body</a></li>
+          <li><a href="#menu">Bridal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Info</h5>
+        <ul>
+          <li><a href="#story">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="tel:+971506584579">+971 50 658 4579</a></li>
+          <li><a href="mailto:mail@akshasalon.com">mail@akshasalon.com</a></li>
+          <li><a href="#contact">Get Directions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Aksha Ladies Salon. All rights reserved.</span>
+      <span>Jaddaf, Dubai, UAE</span>
+    </div>
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/971509956008" title="Chat on WhatsApp">&#9743;</a>
+<div class="to-top" id="toTop" title="Back to top">&#8593;</div>
+
+<script>
+  // Mobile nav toggle
+  document.getElementById('menuToggle').addEventListener('click', function(){
+    document.getElementById('mainNav').classList.toggle('open');
+  });
+
+  // Scroll progress bar
+  var progress = document.getElementById('progress');
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = pct + '%';
+    if(h.scrollTop > 600){ toTop.classList.add('show'); } else { toTop.classList.remove('show'); }
+  });
+  toTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  // Reveal on scroll
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(function(el){ io.observe(el); });
+
+  // Magnetic buttons
+  document.querySelectorAll('.magnetic').forEach(function(btn){
+    btn.addEventListener('mousemove', function(e){
+      var r = btn.getBoundingClientRect();
+      var x = e.clientX - r.left - r.width/2;
+      var y = e.clientY - r.top - r.height/2;
+      btn.style.transform = 'translate(' + x*0.25 + 'px,' + y*0.35 + 'px)';
+    });
+    btn.addEventListener('mouseleave', function(){ btn.style.transform = 'translate(0,0)'; });
+  });
+
+  // Ripple effect on all buttons
+  document.querySelectorAll('.btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      var r = btn.getBoundingClientRect();
+      var ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      var size = Math.max(r.width, r.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - r.left - size/2) + 'px';
+      ripple.style.top = (e.clientY - r.top - size/2) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(function(){ ripple.remove(); }, 650);
+    });
+  });
+
+  // Accordion
+  document.querySelectorAll('.acc-head').forEach(function(head){
+    head.addEventListener('click', function(){
+      var item = head.parentElement;
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.acc-item').forEach(function(i){ i.classList.remove('open'); });
+      if(!wasOpen){ item.classList.add('open'); }
+    });
+  });
+</script>
+
+</body>
+</html>
